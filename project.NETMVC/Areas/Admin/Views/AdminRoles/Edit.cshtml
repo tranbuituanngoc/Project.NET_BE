@@ -1,0 +1,64 @@
+﻿@model project.NETMVC.Models.Role
+
+@{
+    ViewData["Title"] = "Chỉnh Sửa Quyền Truy Cập";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="page-inner">
+    <div class="page-header">
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Index">Danh sách quyền truy cập</a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <a href="#">Chỉnh sửa quyền truy cập</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Chỉnh Sửa Quyền Truy Cập</div>
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-4">
+                        <form asp-action="Edit" method="post" asp-route-id="@Model.RoleId">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="RoleId" />
+                            <div class="form-group form-inline">
+                                <label for="inlineinput" class="col-md-3 col-form-label">Role Name</label>
+                                <div class="col-md-9 p-0">
+                                    <input type="text" class="form-control input-full" id="inlineinput" asp-for="RoleName" placeholder="Role Name">
+                                </div>
+                            </div>
+                            <div class="form-group form-inline">
+                                <label for="inlineinput" class="col-md-3 col-form-label">Descripsion</label>
+                                <div class="col-md-9 p-0">
+                                    <input type="text" class="form-control input-full" id="inlineinput" asp-for="Descripsion" placeholder="Descripsion">
+                                </div>
+                            </div>
+                            <div class="form-group text-center">
+                                <input type="submit" value="Lưu Thay Đổi" class="btn btn-primary" />
+                                <input type="submit" value="Back to List" class="btn btn-primary ml-2" asp-action="Index" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

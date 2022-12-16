@@ -1,0 +1,77 @@
+.container .header__top__links .header__top__hover span{
+    margin-left: 16px;
+}
+.container .header__top__links .header__top__hover ul{
+    margin-top: 4px;
+    background-color: #111111;
+    width: 130px;
+    border-top: 1px solid #e53637;
+}
+.container .header__top__links .header__top__hover ul li{
+    text-align: left;
+    padding: 8px 16px;
+}
+.account{
+    padding: 20px;
+}
+.account .row .nav{
+    border: 1px solid #b7b7b7;
+    border-radius: 5px;
+}
+.account .row .nav .nav-link{
+    color: #111111;
+}
+.account .row .nav .nav-link.active{
+    color: #111111;
+    font-weight: bold;
+    background-color: #f3f2ee;
+}
+.account .row .form-account{
+    background: #f7f7f7;
+    padding: 20px;
+    border-radius: 10px;
+}
+.account .form-group{
+    width: 80%;
+    margin: auto;
+}
+.account .row .title{
+    text-align: center;
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.form-account .form-label{
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+.form-account .form-label span{
+    color: #e53637;
+}
+.form-account .form-control{
+    cursor: pointer;
+    width: 100%;
+    background: #f3f2ee;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    padding: 16px 24px;
+}
+.form-group .f-btn{
+    text-align: center;
+    margin: 8px;
+}
+.form-group .f-btn button{
+    padding: 5px 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: #f7f7f7;
+    background-color: #212529;
+}
+.form-group .f-btn button:hover{
+    background-color: #34ce57;
+}
+.form-group-rp{
+    margin: auto;
+    width: 40%;
+}
