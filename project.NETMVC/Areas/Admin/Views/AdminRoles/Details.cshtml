@@ -1,0 +1,56 @@
+﻿@model project.NETMVC.Models.Role
+
+@{
+    ViewData["Title"] = "Thông tin quyền truy cập";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-inner">
+    <div class="page-header">
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Index">Danh sách quyền truy cập</a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <a href="#">Thông tin quyền truy cập</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Thông Tin Quyền Truy Cập</div>
+            </div>
+            <div class="card-body">
+                <table class="table mt-3">
+                    <tbody>
+                        <tr>
+                            <td class="col-xl-1">ID:</td>
+                            <td class="col-xl-4">@Model.RoleId</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xl-1">Tên Quyền Truy Cập:</td>
+                            <td class="col-xl-4">@Model.RoleName</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xl-1">Mô Tả:</td>
+                            <td class="col-xl-4">@Model.Descripsion</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

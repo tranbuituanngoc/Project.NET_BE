@@ -1,0 +1,69 @@
+﻿@model project.NETMVC.Models.Role
+
+@{
+    ViewData["Title"] = "Xác nhận xóa quyền truy cập";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-inner">
+    <div class="page-header">
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Index">Danh sách quyền truy cập</a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <a href="#">Xác nhận xóa quyền truy cập</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Thông Tin Quyền Truy Cập</div>
+            </div>
+            <div class="card-body">
+                <table class="table mt-3">
+                    <tbody>
+                        <tr>
+                            <td class="col-xl-1">ID:</td>
+                            <td class="col-xl-1 text-center">@Model.RoleId</td>
+                            <td class="col-xl-4"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xl-1">Tên Quyền Truy Cập:</td>
+                            <td class="col-xl-1 text-center">@Model.RoleName</td>
+                            <td class="col-xl-4"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xl-1">Mô Tả:</td>
+                            <td class="col-xl-1 text-center">@Model.Descripsion</td>
+                            <td class="col-xl-4"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xl-1">Xác nhận xóa:</td>
+                            <td class="col-xl-1  text-center">
+                                <form asp-action="Delete" asp-route-id="@Model.RoleId">
+                                    <input type="hidden" asp-for="RoleId" />
+                                    <input type="submit" value="Xác nhận xóa" class="btn btn-danger" />
+                                </form>
+                            </td>
+                            <td class="col-xl-4"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
