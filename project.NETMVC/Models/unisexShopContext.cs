@@ -74,7 +74,7 @@ namespace project.NETMVC.Models
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Accounts)
                     .HasForeignKey(d => d.RoleId)
-                    .HasConstraintName("FK_account_roles");
+                    .HasConstraintName("FK_account_roles2");
             });
 
             modelBuilder.Entity<Blog>(entity =>
@@ -125,13 +125,13 @@ namespace project.NETMVC.Models
 
             modelBuilder.Entity<Category>(entity =>
             {
-                entity.HasKey(e => e.CateId);
+                entity.HasKey(e => e.CatId);
 
                 entity.ToTable("Category");
 
-                entity.Property(e => e.CateId).HasColumnName("cateID");
+                entity.Property(e => e.CatId).HasColumnName("CatID");
 
-                entity.Property(e => e.CateName).HasMaxLength(250);
+                entity.Property(e => e.CatName).HasMaxLength(250);
             });
 
             modelBuilder.Entity<Color>(entity =>
@@ -185,6 +185,8 @@ namespace project.NETMVC.Models
                     .IsUnicode(false)
                     .HasColumnName("CustommerID")
                     .IsFixedLength(true);
+
+                entity.Property(e => e.Address).HasMaxLength(250);
 
                 entity.Property(e => e.Avatar).HasMaxLength(255);
 
@@ -251,14 +253,6 @@ namespace project.NETMVC.Models
                 entity.Property(e => e.LocationId).HasColumnName("LocationID");
 
                 entity.Property(e => e.Conscious)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.District)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Ward)
                     .IsRequired()
                     .HasMaxLength(50);
             });
@@ -385,13 +379,14 @@ namespace project.NETMVC.Models
 
                 entity.Property(e => e.RoleId).HasColumnName("roleID");
 
-                entity.Property(e => e.Descripsion)
-                    .HasMaxLength(50)
-                    .HasColumnName("descripsion");
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(150)
+                    .HasColumnName("description");
 
                 entity.Property(e => e.RoleName)
                     .IsRequired()
-                    .HasMaxLength(40)
+                    .HasMaxLength(50)
                     .HasColumnName("roleName");
             });
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace project.NETMVC.Areas.Admin.Controllers
     public class AdminRolesController : Controller
     {
         private readonly unisexShopContext _context;
+        public INotyfService _notyfService { get;}
 
-        public AdminRolesController(unisexShopContext context)
+        public AdminRolesController(unisexShopContext context,INotyfService notyfService)
         {
             _context = context;
+            _notyfService= notyfService;
         }
 
         // GET: Admin/AdminRoles
@@ -60,6 +63,7 @@ namespace project.NETMVC.Areas.Admin.Controllers
             {
                 _context.Add(role);
                 await _context.SaveChangesAsync();
+                _notyfService.Success("Tạo mới thành công");
                 return RedirectToAction(nameof(Index));
             }
             return View(role);
@@ -99,11 +103,13 @@ namespace project.NETMVC.Areas.Admin.Controllers
                 {
                     _context.Update(role);
                     await _context.SaveChangesAsync();
+                    _notyfService.Success("Cập nhật thành công");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!RoleExists(role.RoleId))
                     {
+                         _notyfService.Success("Có lỗi xảy ra");
                         return NotFound();
                     }
                     else
@@ -142,6 +148,7 @@ namespace project.NETMVC.Areas.Admin.Controllers
             var role = await _context.Roles.FindAsync(id);
             _context.Roles.Remove(role);
             await _context.SaveChangesAsync();
+             _notyfService.Success("Xóa quyền truy cập thành công");
             return RedirectToAction(nameof(Index));
         }
 

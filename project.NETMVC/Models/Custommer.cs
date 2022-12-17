@@ -23,6 +23,7 @@ namespace project.NETMVC.Models
         public string Password { get; set; }
         public DateTime? LastLogin { get; set; }
         public bool? Active { get; set; }
+        public string Address { get; set; }
 
         public virtual Location Location { get; set; }
         public virtual ICollection<Order> Orders { get; set; }

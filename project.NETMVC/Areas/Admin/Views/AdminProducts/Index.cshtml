@@ -1,0 +1,172 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<project.NETMVC.Models.Product>
+@{
+    int currentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Danh sách sản phẩm" + currentPage;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="page-inner">
+    <div class="page-header">
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Index">Danh sách sản phẩm : trang @currentPage</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Danh sách khách hàng</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div id="basic-datatables_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="dataTables_length" id="basic-datatables_length">
+                                        <label>
+                                            <select class=" form-control form-control-sm" style="min-width:160px" id="txtCatID" name="txtCatID" asp-items="ViewBag.Danhmuc">
+                                                <option disabled selected>Chọn Danh Mục</option>
+                                                <option value="0">Chọn Tất Cả</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div id="basic-datatables_filter" class="dataTables_filter">
+                                        <a class="btn btn-success" asp-controller="AdminProducts" asp-action="Create">
+                                            <span style="color: #fff;font-weight:600;">
+                                                <span class="btn-label">
+                                                    <i class="fa fa-plus"></i>
+                                                </span>
+                                                Thêm sản phẩm
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="basic-datatables" class="display table table-striped table-hover dataTable" role="grid" aria-describedby="basic-datatables_info">
+                                        <thead>
+                                        <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 20px; background: #dbdbdb; ">ID</th>
+                                        <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 150px; background: #dbdbdb; ">Tên sản phẩm</th>
+                                        <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 120px; background: #dbdbdb; ">Danh mục</th>
+                                        <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 110.8px; background: #dbdbdb; ">Giá</th>
+                                        <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 86.5px; background: #dbdbdb; ">Tồn kho</th>
+                                        <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 87.512px; background: #dbdbdb; ">Trạng thái</th>
+                                        <th class="text-center" style="width: 252px; background: #dbdbdb; "></th>
+                                        </thead class="text-center">
+                                        <tbody class="text-center">
+                                            @if (Model != null)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <tr role="row" class="odd">
+                                                        <td class="sorting_1">@item.IdSp</td>
+                                                        <td>@item.Name</td>
+                                                        <td>@item.Cate.CatName</td>
+                                                        <td>@item.Price.Value.ToString("#,##") VNĐ</td>
+                                                        <td>@item.UnitslnStock</td>
+                                                        <td>
+                                                            @if (item.UnitslnStock.Value > 0)
+                                                            {
+                                                                <span>Còn hàng</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span>Hết hàng</span>
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn-sm btn-info" asp-area="Admin" asp-controller="AdminProducts" asp-action="Details" asp-route-id="@item.IdSp">View</a>
+                                                            <a class="btn-sm btn-secondary" asp-area="Admin" asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@item.IdSp">Edit</a>
+                                                            <a class="btn-sm btn-danger" asp-area="Admin" asp-controller="AdminProducts" asp-action="Delete" asp-route-id="@item.IdSp">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                    <div aria-label="Page navigation example" class="mt-4">
+                                        <ul class="pagination">
+                                            <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminProducts" asp-route-CateID="@ViewBag.CurrentCateID" asp-action="Index" />
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* scripts to filter and search products *@
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            //when id change then
+            jQuery("#txtCatID").change(function () {
+                //set id= selected 
+                var catID = jQuery(this).children(":selected").attr("value");
+                catID = parseFloat(catID);
+                //get option and change when changed
+                $('#txtCatID option')
+                    .removeAttr('selected');
+                $("#txtCatID > [value=" + catID + "]").attr("selected", "true");
+                //call ajax function
+                $.ajax({
+                    url: '/Admin/AdminProducts/Filtter',
+                    //set data type to json
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        CatID: catID
+                    },
+                    async: true,
+                    //if success then send redirect to url and call filter function in AdminProductController
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    //else error
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+
+            $("#keyword").keyup(function () {
+                var strkeyword = $('#keyword').val();
+                $.ajax({
+                    url: '/Admin/Search/FindProduct/',
+                    datatype: "json",
+                    type: "POST",
+                    data: { keyword: strkeyword },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+    </script>
+}
