@@ -35,6 +35,10 @@ namespace project.NETMVC
             services.AddDbContext<unisexShopContext>(options => options.UseSqlServer(stringConnectdb));
 
             services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
+            
+            // set notification and position to show notify
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddNotyf(config => { config.DurationInSeconds=3; config.IsDismissable=true; config.Position = NotyfPosition.BottomRight; });
 
             object p = services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });

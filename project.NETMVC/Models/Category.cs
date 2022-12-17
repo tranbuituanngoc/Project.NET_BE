@@ -13,8 +13,8 @@ namespace project.NETMVC.Models
             Products = new HashSet<Product>();
         }
 
-        public int CateId { get; set; }
-        public string CateName { get; set; }
+        public int CatId { get; set; }
+        public string CatName { get; set; }
 
         public virtual ICollection<Blog> Blogs { get; set; }
         public virtual ICollection<Product> Products { get; set; }

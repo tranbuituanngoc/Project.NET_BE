@@ -14,7 +14,7 @@ namespace project.NETMVC.Models
 
         public int RoleId { get; set; }
         public string RoleName { get; set; }
-        public string Descripsion { get; set; }
+        public string Description { get; set; }
 
         public virtual ICollection<Account> Accounts { get; set; }
     }
