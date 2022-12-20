@@ -21,7 +21,7 @@
         </ul>
     </div>
     <div class="row">
-        <div class="col-md-14">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Danh sách tài khoản</h4>
@@ -45,57 +45,58 @@
                                             </select>
                                         </label>
                                     </div>
-                                @*</div><div class="col-sm-12 col-md-6"><div id="multi-filter-select_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="multi-filter-select"></label></div></div>*@
-                            </div><div class="row">
-                                <div class="col-sm-12">
-                                    <table id="multi-filter-select" class="display table table-striped table-hover dataTable" role="grid" aria-describedby="multi-filter-select_info">
-                                        <thead>
-                                            <tr role="row">
-                                                <th class="sorting_desc" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 20px; background: #dbdbdb; ">ID</th>
-                                                <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 150px; background: #dbdbdb; ">Tên</th>
-                                                <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 120px; background: #dbdbdb; ">Email</th>
-                                                <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 110.8px; background: #dbdbdb; ">Điện thoại</th>
-                                                <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 146.5px; background: #dbdbdb; ">Quyền truy cập</th>
-                                                <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 87.512px; background: #dbdbdb; ">Trạng thái</th>
-                                                <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 120.512px; background: #dbdbdb; ">Lần đăng nhập cuối</th>
-                                                <th style="width: 252px; background: #dbdbdb; "></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if (Model != null)
-                                            {
-                                                foreach (var item in Model)
+                                    @*</div><div class="col-sm-12 col-md-6"><div id="multi-filter-select_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="multi-filter-select"></label></div></div>*@
+                                </div><div class="row">
+                                    <div class="col-sm-12">
+                                        <table id="multi-filter-select" class="display table table-striped table-hover dataTable" role="grid" aria-describedby="multi-filter-select_info">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 20px; background: #dbdbdb; ">ID</th>
+                                                    <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 150px; background: #dbdbdb; ">Tên</th>
+                                                    <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 120px; background: #dbdbdb; ">Email</th>
+                                                    <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 110.8px; background: #dbdbdb; ">Điện thoại</th>
+                                                    <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 146.5px; background: #dbdbdb; ">Quyền truy cập</th>
+                                                    <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 87.512px; background: #dbdbdb; ">Trạng thái</th>
+                                                    <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 120.512px; background: #dbdbdb; ">Lần đăng nhập cuối</th>
+                                                    <th style="width: 361px; background: #dbdbdb; "></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model != null)
                                                 {
-                                            <tr role="row" class="odd">
-                                                <td class="sorting_1">@item.AccountId</td>
-                                                <td>@item.FullName</td>
-                                                <td>@item.Email</td>
-                                                <td>@item.Phone</td>
-                                                <td>@item.Role.Description</td>
-                                                <td>
-                                                    @if (item.Active)
+                                                    foreach (var item in Model)
                                                     {
-                                                        <p>Hoạt động</p>
+                                                        <tr role="row" class="odd">
+                                                            <td class="sorting_1">@item.AccountId</td>
+                                                            <td>@item.FullName</td>
+                                                            <td>@item.Email</td>
+                                                            <td>@item.Phone</td>
+                                                            <td>@item.Role.Description</td>
+                                                            <td>
+                                                                @if (item.Active)
+                                                                {
+                                                                    <p>Hoạt động</p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>Khóa </p>
+                                                                }
+                                                            </td>
+                                                            <td>@item.LastLogin</td>
+                                                            <td>
+                                                                <a class="btn-sm btn-info" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Details" asp-route-id="@item.AccountId">View</a>
+                                                                <a class="btn-sm btn-secondary" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Edit" asp-route-id="@item.AccountId">Edit</a>
+                                                                <a class="btn-sm btn-danger" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Delete" asp-route-id="@item.AccountId">Delete</a>
+                                                            </td>
+                                                        </tr>
                                                     }
-                                                    else
-                                                    {
-                                                        <p>Khóa </p>
-                                                    }
-                                                </td>
-                                                <td>@item.LastLogin</td>
-                                                <td>
-                                                    <a class="btn-sm btn-info" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Details" asp-route-id="@item.AccountId">View</a>
-                                                    <a class="btn-sm btn-secondary" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Edit" asp-route-id="@item.AccountId">Edit</a>
-                                                    <a class="btn-sm btn-danger" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Delete" asp-route-id="@item.AccountId">Delete</a>
-                                                </td>
-                                            </tr>
                                                 }
-                                            }
 
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="multi-filter-select_info" role="status" aria-live="polite">Showing 1 to 5 of 57 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="multi-filter-select_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="multi-filter-select_previous"><a href="#" aria-controls="multi-filter-select" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="multi-filter-select" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="multi-filter-select" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="multi-filter-select" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="multi-filter-select" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="multi-filter-select" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item disabled" id="multi-filter-select_ellipsis"><a href="#" aria-controls="multi-filter-select" data-dt-idx="6" tabindex="0" class="page-link">…</a></li><li class="paginate_button page-item "><a href="#" aria-controls="multi-filter-select" data-dt-idx="7" tabindex="0" class="page-link">12</a></li><li class="paginate_button page-item next" id="multi-filter-select_next"><a href="#" aria-controls="multi-filter-select" data-dt-idx="8" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -103,3 +104,4 @@
         </div>
     </div>
 </div>
+

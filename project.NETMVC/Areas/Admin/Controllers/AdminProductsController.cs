@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PagedList.Core;
+using WebShop.Helpper;
 using project.NETMVC.Models;
 
 namespace project.NETMVC.Areas.Admin.Controllers
@@ -14,10 +18,12 @@ namespace project.NETMVC.Areas.Admin.Controllers
     public class AdminProductsController : Controller
     {
         private readonly unisexShopContext _context;
+        public INotyfService _notyfService { get; }
 
-        public AdminProductsController(unisexShopContext context)
+        public AdminProductsController(unisexShopContext context, INotyfService notyfService)
         {
             _context = context;
+            _notyfService = notyfService;
         }
 
         // GET: Admin/AdminProducts
@@ -41,9 +47,9 @@ namespace project.NETMVC.Areas.Admin.Controllers
             else
             {
                 lsProducts = _context.Products
-                .AsNoTracking()
-                .Include(x => x.Cate)
-                .OrderBy(x => x.IdSp).ToList();
+               .AsNoTracking()
+               .Include(x => x.Cate)
+               .OrderBy(x => x.IdSp).ToList();
             }
 
             // because to list so parse to queryable like lsProducts.AsQueryable()
@@ -102,15 +108,28 @@ namespace project.NETMVC.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdSp,Name,CateId,Price,Status,Discount,DateCreate,DateModified,BestSeller,HomeFlag,Active,UnitslnStock,Thumb,Image,Video,ShortDescrip,Descrip")] Product product)
+        public async Task<IActionResult> Create([Bind("IdSp,Name,CateId,Price,Status,Discount,DateCreate,DateModified,BestSeller,HomeFlag,Active,UnitslnStock,Thumb,Image,Video,ShortDescrip,Descrip")] Product product, Microsoft.AspNetCore.Http.IFormFile fThumb)
         {
             if (ModelState.IsValid)
             {
+                product.Name = Utilities.ToTitleCase(product.Name);
+                if (fThumb != null)
+                {
+                    // if isImage then get extension and return a product thum with image
+                    string extension = Path.GetExtension(fThumb.FileName);
+                    string image = Utilities.SEOUrl(product.Name) + extension;
+                    product.Thumb = await Utilities.UploadFile(fThumb, @"products", image.ToLower());
+                }
+                if (string.IsNullOrEmpty(product.Thumb)) product.Thumb = "default.jpg";
+                product.DateModified = DateTime.Now;
+                product.DateCreate = DateTime.Now;
+
                 _context.Add(product);
                 await _context.SaveChangesAsync();
+                _notyfService.Success("Thêm mới thành công");
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Danhmuc"] = new SelectList(_context.Categories, "CatId", "CatName", product.CateId);
+            ViewData["DanhMuc"] = new SelectList(_context.Categories, "CatId", "CatName", product.CateId);
             return View(product);
         }
 
@@ -136,7 +155,7 @@ namespace project.NETMVC.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdSp,Name,CateId,Price,Status,Discount,DateCreate,DateModified,BestSeller,HomeFlag,Active,UnitslnStock,Thumb,Image,Video,ShortDescrip,Descrip")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("IdSp,Name,CateId,Price,Status,Discount,DateCreate,DateModified,BestSeller,HomeFlag,Active,UnitslnStock,Thumb,Image,Video,ShortDescrip,Descrip")] Product product, Microsoft.AspNetCore.Http.IFormFile fThumb)
         {
             if (id != product.IdSp)
             {
@@ -147,8 +166,23 @@ namespace project.NETMVC.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
+                    if (ModelState.IsValid)
+                    {
+                        product.Name = Utilities.ToTitleCase(product.Name);
+                        if (fThumb != null)
+                        {
+                            // if isImage then get extension and return a product thum with image
+                            string extension = Path.GetExtension(fThumb.FileName);
+                            string image = Utilities.SEOUrl(product.Name) + extension;
+                            product.Thumb = await  Utilities.UploadFile(fThumb, @"products", image.ToLower());
+                        }
+                        if (string.IsNullOrEmpty(product.Thumb)) product.Thumb = "default.jpg";
+                        product.DateModified = DateTime.Now;
+
+                        _context.Update(product);
+                        _notyfService.Success("Cập nhật thành công");
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -194,6 +228,7 @@ namespace project.NETMVC.Areas.Admin.Controllers
             var product = await _context.Products.FindAsync(id);
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
+            _notyfService.Success("Xóa thành công");
             return RedirectToAction(nameof(Index));
         }
 

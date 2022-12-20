@@ -10,7 +10,7 @@ namespace project.NETMVC.Models
         public Product()
         {
             Colors = new HashSet<Color>();
-            Evaluation2s = new HashSet<Evaluation2>();
+            OrderDetails = new HashSet<OrderDetail>();
             Sizes = new HashSet<Size>();
             UserEvaluations = new HashSet<UserEvaluation>();
         }
@@ -23,9 +23,9 @@ namespace project.NETMVC.Models
         public double? Discount { get; set; }
         public DateTime? DateCreate { get; set; }
         public DateTime? DateModified { get; set; }
-        public bool? BestSeller { get; set; }
-        public bool? HomeFlag { get; set; }
-        public bool? Active { get; set; }
+        public bool BestSeller { get; set; }
+        public bool HomeFlag { get; set; }
+        public bool Active { get; set; }
         public int? UnitslnStock { get; set; }
         public string Thumb { get; set; }
         public string Image { get; set; }
@@ -35,7 +35,7 @@ namespace project.NETMVC.Models
 
         public virtual Category Cate { get; set; }
         public virtual ICollection<Color> Colors { get; set; }
-        public virtual ICollection<Evaluation2> Evaluation2s { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual ICollection<Size> Sizes { get; set; }
         public virtual ICollection<UserEvaluation> UserEvaluations { get; set; }
     }

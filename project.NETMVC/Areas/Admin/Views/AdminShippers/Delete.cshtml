@@ -1,0 +1,63 @@
+﻿@model project.NETMVC.Models.Shipper
+
+@{
+    ViewData["Title"] = "Xóa Shipper "+Model.ShipperName;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-inner">
+    <div class="page-header">
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <a asp-area="Admin" asp-controller="AdminShippers" asp-action="Index">Danh sách Shipper</a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <span class="breadcrumb-item active">Xóa Shipper @Model.ShipperName</span>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <div class="card-body">
+        <h4 class="card-title">Xóa Shipper @Model.ShipperName</h4>
+        <div class="table-responsive">
+            <table class="product-info-table m-t-20">
+                <tbody>
+                    <tr>
+                        <td>ID:</td>
+                        <td class="text-dark font-weight-semibold">@Model.ShipperId</td>
+                    </tr>
+                    <tr>
+                        <td>Tên Shipper:</td>
+                        <td>@Model.ShipperName</td>
+                    </tr>
+                    <tr>
+                        <td>Công ty:</td>
+                        <td>@Model.Company</td>
+                    </tr>
+                    <tr>
+                        <td>Xác nhận xóa:</td>
+                        <td>
+                            <form asp-controller="AdminShippers" asp-route-id="@Model.ShipperId" asp-action="Delete">
+                                <input type="hidden" asp-for="ShipperId" />
+                                <input type="submit" value="Xác nhận xóa" class="btn btn-danger" />
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
