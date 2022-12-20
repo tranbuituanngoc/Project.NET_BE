@@ -21,12 +21,11 @@ namespace project.NETMVC.Models
         public virtual DbSet<Blog> Blogs { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
-        public virtual DbSet<CtBlog> CtBlogs { get; set; }
         public virtual DbSet<Custommer> Custommers { get; set; }
-        public virtual DbSet<Evaluation2> Evaluation2s { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual DbSet<Page> Pages { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Shipper> Shippers { get; set; }
@@ -79,21 +78,19 @@ namespace project.NETMVC.Models
 
             modelBuilder.Entity<Blog>(entity =>
             {
-                entity.HasKey(e => e.IdBlog);
-
                 entity.ToTable("blog");
 
-                entity.Property(e => e.IdBlog).HasColumnName("id_blog");
+                entity.Property(e => e.BlogId).HasColumnName("blogID");
 
                 entity.Property(e => e.AccountId)
                     .HasMaxLength(10)
                     .IsUnicode(false)
-                    .HasColumnName("AccountID")
+                    .HasColumnName("accountID")
                     .IsFixedLength(true);
 
-                entity.Property(e => e.Author).HasMaxLength(150);
-
-                entity.Property(e => e.CateId).HasColumnName("cateID");
+                entity.Property(e => e.Author)
+                    .HasMaxLength(150)
+                    .HasColumnName("author");
 
                 entity.Property(e => e.CreateDate)
                     .HasColumnType("datetime")
@@ -107,31 +104,34 @@ namespace project.NETMVC.Models
 
                 entity.Property(e => e.IsNewfeed).HasColumnName("isNewfeed");
 
-                entity.Property(e => e.ModifiedDate)
+                entity.Property(e => e.ListImage).HasColumnName("listImage");
+
+                entity.Property(e => e.ModifyDate)
                     .HasColumnType("datetime")
-                    .HasColumnName("modifiedDate");
+                    .HasColumnName("modifyDate");
 
                 entity.Property(e => e.Published).HasColumnName("published");
 
                 entity.Property(e => e.Title)
-                    .HasMaxLength(250)
+                    .HasMaxLength(150)
                     .HasColumnName("title");
-
-                entity.HasOne(d => d.Cate)
-                    .WithMany(p => p.Blogs)
-                    .HasForeignKey(d => d.CateId)
-                    .HasConstraintName("FK_blog_Category");
             });
 
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.HasKey(e => e.CatId);
 
-                entity.ToTable("Category");
+                entity.ToTable("category");
 
-                entity.Property(e => e.CatId).HasColumnName("CatID");
+                entity.Property(e => e.CatId).HasColumnName("catId");
 
-                entity.Property(e => e.CatName).HasMaxLength(250);
+                entity.Property(e => e.CatName)
+                    .HasMaxLength(250)
+                    .HasColumnName("catName");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Thumb).HasMaxLength(250);
             });
 
             modelBuilder.Entity<Color>(entity =>
@@ -154,26 +154,6 @@ namespace project.NETMVC.Models
                     .HasForeignKey(d => d.IdSp)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_color_product");
-            });
-
-            modelBuilder.Entity<CtBlog>(entity =>
-            {
-                entity.HasKey(e => e.IdCtblog);
-
-                entity.ToTable("ct_blog");
-
-                entity.Property(e => e.IdCtblog).HasColumnName("id_ctblog");
-
-                entity.Property(e => e.IdBlog).HasColumnName("id_blog");
-
-                entity.Property(e => e.Image)
-                    .HasMaxLength(50)
-                    .HasColumnName("image");
-
-                entity.HasOne(d => d.IdBlogNavigation)
-                    .WithMany(p => p.CtBlogs)
-                    .HasForeignKey(d => d.IdBlog)
-                    .HasConstraintName("FK_ct_blog_blog");
             });
 
             modelBuilder.Entity<Custommer>(entity =>
@@ -213,39 +193,6 @@ namespace project.NETMVC.Models
                     .HasConstraintName("FK_custommer_location");
             });
 
-            modelBuilder.Entity<Evaluation2>(entity =>
-            {
-                entity.HasKey(e => e.IdDanhgia)
-                    .HasName("PK_Table1");
-
-                entity.ToTable("evaluation2");
-
-                entity.Property(e => e.IdDanhgia).HasColumnName("id_danhgia");
-
-                entity.Property(e => e.AccountId)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("AccountID")
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.EvaluationDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("evaluationDate");
-
-                entity.Property(e => e.IdSp).HasColumnName("id_sp");
-
-                entity.Property(e => e.Message)
-                    .HasMaxLength(255)
-                    .HasColumnName("message");
-
-                entity.Property(e => e.Point).HasColumnName("point");
-
-                entity.HasOne(d => d.IdSpNavigation)
-                    .WithMany(p => p.Evaluation2s)
-                    .HasForeignKey(d => d.IdSp)
-                    .HasConstraintName("FK_evaluation2_product");
-            });
-
             modelBuilder.Entity<Location>(entity =>
             {
                 entity.ToTable("location");
@@ -274,9 +221,9 @@ namespace project.NETMVC.Models
 
                 entity.Property(e => e.OrderDate).HasColumnType("datetime");
 
-                entity.Property(e => e.PaymentDate).HasColumnType("datetime");
+                entity.Property(e => e.OrderDetailsId).HasColumnName("orderDetailsID");
 
-                entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
+                entity.Property(e => e.PaymentDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ShipDate).HasColumnType("datetime");
 
@@ -287,6 +234,11 @@ namespace project.NETMVC.Models
                     .HasForeignKey(d => d.CustommerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_order_custommer");
+
+                entity.HasOne(d => d.OrderDetails)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.OrderDetailsId)
+                    .HasConstraintName("FK_order_orderDetails");
 
                 entity.HasOne(d => d.TransactStatus)
                     .WithMany(p => p.Orders)
@@ -302,16 +254,27 @@ namespace project.NETMVC.Models
 
                 entity.Property(e => e.OrderDetailsId).HasColumnName("OrderDetailsID");
 
-                entity.Property(e => e.OrderId).HasColumnName("OrderID");
-
                 entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
                 entity.Property(e => e.ShipDate).HasColumnType("datetime");
 
-                entity.HasOne(d => d.Order)
+                entity.HasOne(d => d.Product)
                     .WithMany(p => p.OrderDetails)
-                    .HasForeignKey(d => d.OrderId)
-                    .HasConstraintName("FK_orderDetails_order");
+                    .HasForeignKey(d => d.ProductId)
+                    .HasConstraintName("FK_orderDetails_product");
+            });
+
+            modelBuilder.Entity<Page>(entity =>
+            {
+                entity.ToTable("pages");
+
+                entity.Property(e => e.PageId).HasColumnName("PageID");
+
+                entity.Property(e => e.CreateAt).HasColumnType("datetime");
+
+                entity.Property(e => e.PageName).HasMaxLength(50);
+
+                entity.Property(e => e.Thumb).HasMaxLength(250);
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -370,7 +333,7 @@ namespace project.NETMVC.Models
                 entity.HasOne(d => d.Cate)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CateId)
-                    .HasConstraintName("FK_product_Category");
+                    .HasConstraintName("FK_product_category");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -434,9 +397,16 @@ namespace project.NETMVC.Models
 
                 entity.Property(e => e.TransactStatusId).HasColumnName("TransactStatusID");
 
+                entity.Property(e => e.ShipperId).HasColumnName("ShipperID");
+
                 entity.Property(e => e.Status)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.HasOne(d => d.Shipper)
+                    .WithMany(p => p.TransactStatuses)
+                    .HasForeignKey(d => d.ShipperId)
+                    .HasConstraintName("FK_transactStatus_shipper");
             });
 
             modelBuilder.Entity<UserEvaluation>(entity =>

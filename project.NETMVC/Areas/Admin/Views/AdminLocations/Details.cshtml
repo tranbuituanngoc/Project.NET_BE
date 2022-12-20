@@ -1,0 +1,50 @@
+﻿@model project.NETMVC.Models.Location
+
+@{
+    ViewData["Title"] = "Chi tiết Tỉnh/Thành "+Model.Conscious;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-inner">
+    <div class="page-header">
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <a asp-area="Admin" asp-controller="AdminLocations" asp-action="Index">Danh sách tỉnh-thành</a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <span class="breadcrumb-item active">Thông tin Tỉnh/Thành : @Model.Conscious</span>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <div class="card-body">
+        <h4 class="card-title">Thông tin Tỉnh/Thành : @Model.Conscious</h4>
+        <div class="table-responsive">
+            <table class="product-info-table m-t-20">
+                <tbody>
+                    <tr>
+                        <td>ID:</td>
+                        <td class="text-dark font-weight-semibold">@Model.LocationId</td>
+                    </tr>
+                    <tr>
+                        <td>Tên tỉnh-thành:</td>
+                        <td>@Model.Conscious</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

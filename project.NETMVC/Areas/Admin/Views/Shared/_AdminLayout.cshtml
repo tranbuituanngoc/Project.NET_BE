@@ -4,10 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Atlantis Lite - Bootstrap 4 Admin Dashboard</title>
+    <title>@ViewData["Title"]</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="~/adminAssets/img/icon.ico" type="image/x-icon" />
-
+    @* summnernote *@
+    <link href="~/adminAssets/summernote/summernote.css" rel="stylesheet" />
+    <link href="~/adminAssets/summernote/summernote-bs4.css" rel="stylesheet" />
+    <link href="~/adminAssets/summernote/summernote-lite.css" rel="stylesheet" />
     <!-- Fonts and icons -->
     <script src="~/adminAssets/js/plugin/webfont/webfont.min.js"></script>
     <script>
@@ -24,10 +27,16 @@
     <link rel="stylesheet" href="~/adminAssets/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/adminAssets/css/atlantis.min.css">
 
+
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="~/adminAssets/css/demo.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/v4-shims.css">
+    <!-- page css -->
+    <link href="~/Adminassets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+
+    <!-- Core css -->
+    <link href="~/Adminassets/css/app.min.css" rel="stylesheet">
 
 </head>
 <body>
@@ -327,7 +336,20 @@
     <!-- Atlantis JS -->
     <script src="~/adminAssets/js/atlantis.min.js"></script>
 
-   
+    <!-- Core Vendors JS -->
+    <script src="~/Adminassets/js/vendors.min.js"></script>
+
+    <!-- page js -->
+    <script src="~/Adminassets/vendors/chartjs/Chart.min.js"></script>
+    <script src="~/Adminassets/js/pages/dashboard-e-commerce.js"></script>
+
+    <!-- Core JS -->
+    <script src="~/Adminassets/js/app.min.js"></script>
+
+    <!-- Summnernote -->
+    <script src="~/Adminassets/summernote/summernote.js"></script>
+    <script src="~/Adminassets/summernote/summernote-bs4.js"></script>
+    <script src="~/Adminassets/summernote/summernote-lite.js"></script>
     @* add Extension AspNetCoreHero.ToastNotificat *@
     @await Component.InvokeAsync("Notyf")
     @await RenderSectionAsync("Scripts", required: false)

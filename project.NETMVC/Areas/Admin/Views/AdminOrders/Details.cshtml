@@ -1,0 +1,121 @@
+﻿@model project.NETMVC.Models.Order
+
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng #"+Model.OrderId;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-inner">
+    <div class="page-header">
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <a asp-area="Admin" asp-controller="AdminOrders" asp-action="Index">Danh sách đơn hàng</a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <span class="breadcrumb-item active">Thông tin đơn hàng #: @Model.OrderId</span>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <div class="card-body">
+        <h4 class="card-title">Thông tin đơn hàng #: @Model.OrderId</h4>
+        <div class="table-responsive">
+            <table class="product-info-table m-t-20">
+                <tbody>
+                    <tr>
+                        <td>ID:</td>
+                        <td class="text-dark font-weight-semibold">@Model.OrderId</td>
+                    </tr>
+                    <tr>
+                        <td>Tên khách hàng:</td>
+                        <td>@Model.Custommer.FullName</td>
+                    </tr>
+                    <tr>
+                        <td>Xóa:</td>
+                        <td>
+                            @if (Model.Deleted)
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" id="switch-1" checked="" disabled />
+                                    <label for="switch-1"></label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" id="switch-1" disabled />
+                                    <label for="switch-1"></label>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tình trạng thanh toán:</td>
+                        <td>
+                            @if (Model.Paid)
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" id="switch-1" checked="" disabled />
+                                    <label for="switch-1"></label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" id="switch-1" disabled />
+                                    <label for="switch-1"></label>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ngày thanh toán:</td>
+                        <td>@Model.PaymentDate</td>
+                    </tr>
+                    <tr>
+                        <td>Ngày tạo đơn:</td>
+                        <td>@Model.OrderDate</td>
+                    </tr>
+                    <tr>
+                        <td>Ngày giao đơn:</td>
+                        <td>@Model.ShipDate</td>
+                    </tr>
+                    <tr>
+                        <td>Trạng thái đơn hàng:</td>
+                        <td>@Model.TransactStatus.Status</td>
+                    </tr>
+                    @*<tr>
+                        <td>Tên sản phẩm:</td>
+                        <td>@Model.OrderDetails.Product.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Số lượng:</td>
+                        <td>@Model.OrderDetails.Quantity</td>
+                    </tr>
+                    <tr>
+                        <td>Tổng tiền thanh toán:</td>
+                        <td>@Model.OrderDetails.Total</td>
+                    </tr>
+                    <tr>*@
+                        <td>Ghi chú:</td>
+                        <td>@Html.Raw(Model.Note)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,96 @@
+﻿@model project.NETMVC.Models.Blog
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-inner">
+    <div class="page-header">
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <a asp-area="Admin" asp-controller="AdminBlogs" asp-action="Index">Danh sách tin tức</a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <span class="breadcrumb-item active">Chi tiết : @Model.Title</span>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <div class="card-body">
+        <h4 class="card-title">Chi tiết : @Model.Title</h4>
+        <div class="table-responsive">
+            <table class="product-info-table m-t-20">
+                <tbody>
+                    <tr>
+                        <td>ID:</td>
+                        <td class="text-dark font-weight-semibold">@Model.BlogId</td>
+                    </tr>
+                    <tr>
+                        <td>Tiêu đề:</td>
+                        <td>@Model.Title</td>
+                    </tr>
+                    <tr>
+                        <td>Trạng thái:</td>
+                        <td>
+                            @if (Model.Published)
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" id="switch-1" checked="" disabled />
+                                    <label for="switch-1"></label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" id="switch-1" disabled />
+                                    <label for="switch-1"></label>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ngày tạo:</td>
+                        <td>@Model.CreateDate</td>
+                    </tr>
+                    <tr>
+                        <td>Ngày chỉnh sửa:</td>
+                        <td>@Model.ModifyDate</td>
+                    </tr>
+                    <tr>
+                        <td>Ảnh đại diện:</td>
+                        <td>
+                            <img max-width="200" height="200" style="object-fit: cover;" src="~/images/blogs/@Model.Image" alt="@Model.Image" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mô tả page:</td>
+                        <td>@Html.Raw(Model.Contents)</td>
+                    </tr>
+                    <tr>
+                        <td>Xác nhận xóa:</td>
+                        <td>
+                            <form asp-controller="AdminProducts" asp-route-id="@Model.BlogId" asp-action="Delete">
+                                <input type="hidden" asp-for="BlogId" />
+                                <input type="submit" value="Xác nhận xóa" class="btn btn-danger" />
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>    

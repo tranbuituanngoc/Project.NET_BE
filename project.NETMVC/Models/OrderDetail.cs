@@ -7,8 +7,12 @@ namespace project.NETMVC.Models
 {
     public partial class OrderDetail
     {
+        public OrderDetail()
+        {
+            Orders = new HashSet<Order>();
+        }
+
         public int OrderDetailsId { get; set; }
-        public int? OrderId { get; set; }
         public int? ProductId { get; set; }
         public int? OrderNumber { get; set; }
         public int? Quantity { get; set; }
@@ -16,6 +20,7 @@ namespace project.NETMVC.Models
         public int? Total { get; set; }
         public DateTime? ShipDate { get; set; }
 
-        public virtual Order Order { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

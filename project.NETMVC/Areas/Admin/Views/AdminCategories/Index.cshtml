@@ -1,0 +1,102 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<project.NETMVC.Models.Category>
+@{
+    int currentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Danh sách danh mục sản phẩm - trang" + currentPage;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-inner">
+    <div class="page-header">
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <a asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">Danh sách danh mục sản phẩm : trang @currentPage</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Danh sách danh mục sản phẩm</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div id="basic-datatables_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div id="basic-datatables_filter" class="dataTables_filter">
+                                        <a class="btn btn-success" asp-controller="AdminCategories" asp-action="Create">
+                                            <span style="color: #fff;font-weight:600;">
+                                                <span class="btn-label">
+                                                    <i class="fa fa-plus"></i>
+                                                </span>
+                                                Thêm danh mục
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <table id="basic-datatables" class="display table table-striped table-hover dataTable" role="grid" aria-describedby="basic-datatables_info">
+                                    <thead>
+                                    <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 20px; background: #dbdbdb; ">ID</th>
+                                    <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 250px; background: #dbdbdb; ">Tên danh mục</th>
+                                    <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 20px; background: #dbdbdb; ">Ordering</th>
+                                    <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 186.5px; background: #dbdbdb; ">Trạng thái</th>
+                                    <th style="width: 230px; background: #dbdbdb; "></th>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        @if (Model != null)
+                                        {
+                                            foreach (var item in Model)
+                                            {
+                                                <tr role="row" class="odd">
+                                                    <td class="sorting_1">@item.CatId</td>
+                                                    <td>@item.CatName</td>
+                                                    <td>@item.Odering</td>
+                                                    <td>
+                                                        @if (item.Published)
+                                                        {
+                                                            <span class="text-center">Public</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="text-center">Non-Public</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <a class="btn m-1 btn-info" asp-area="Admin" asp-controller="AdminCategories" asp-action="Details" asp-route-id="@item.CatId">View</a>
+                                                        <a class="btn m-1 btn-secondary" asp-area="Admin" asp-controller="AdminCategories" asp-action="Edit" asp-route-id="@item.CatId">Edit</a>
+                                                        <a class="btn m-1 btn-danger" asp-area="Admin" asp-controller="AdminCategories" asp-action="Delete" asp-route-id="@item.CatId">Delete</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+                                <div aria-label="Page navigation example" class="mt-4">
+                                    <ul class="pagination">
+                                        <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminCategories" asp-action="Index" />
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

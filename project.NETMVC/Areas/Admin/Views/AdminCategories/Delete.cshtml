@@ -1,0 +1,91 @@
+﻿@model project.NETMVC.Models.Category
+
+@{
+    ViewData["Title"] = "Xóa danh mục " + Model.CatName;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-inner">
+    <div class="page-header">
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <a asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">Danh sách danh mục sản phẩm</a>
+            </li>
+            <li class="separator">
+                <i class="fas fa-angle-right"></i>
+            </li>
+            <li class="nav-item">
+                <span class="breadcrumb-item active">Thông tin danh mục : @Model.CatName</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body">
+        <h4 class="card-title">Thông tin danh mục : @Model.CatName</h4>
+        <div class="table-responsive">
+            <table class="product-info-table m-t-20">
+                <tbody>
+                    <tr>
+                        <td>ID:</td>
+                        <td class="text-dark font-weight-semibold">@Model.CatId</td>
+                    </tr>
+                    <tr>
+                        <td>Tên danh mục:</td>
+                        <td>@Model.CatName</td>
+                    </tr>
+                    <tr>
+                        <td>Trạng thái:</td>
+                        <td>
+                            @if (Model.Published)
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" id="switch-1" checked="" disabled />
+                                    <label for="switch-1"></label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" id="switch-1" disabled />
+                                    <label for="switch-1"></label>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ordering:</td>
+                        <td>@Model.Odering</td>
+                    </tr>
+                    <tr>
+                        <td>Ảnh đại diện:</td>
+                        <td>
+                            <img max-width="200" height="200" src="~/images/categories/@Model.Thumb" alt="@Model.CatName" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mô tả danh mục:</td>
+                        <td>@Html.Raw(Model.Description)</td>
+                    </tr>
+                    <tr>
+                        <td>Xác nhận xóa:</td>
+                        <td>
+                            <form asp-controller="AdminCategories" asp-route-id="@Model.CatId" asp-action="Delete">
+                                <input type="hidden" asp-for="CatId" />
+                                <input type="submit" value="Xác nhận xóa" class="btn btn-danger" />
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
