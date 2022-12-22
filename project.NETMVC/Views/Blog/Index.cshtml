@@ -1,5 +1,5 @@
-﻿@using PagedList.Core.Mvc
-@model PagedList.Core.IPagedList<project.NETMVC.Models.Blog>
+﻿@model PaginatedList<project.NETMVC.Models.Blog>
+
 @{
     ViewData["Title"] = "Tin Tức - Trang " + ViewBag.CurrentPage;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -26,11 +26,11 @@
                 {
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="blog__item">
-                            <div class="blog__item__pic set-bg" data-setbg="/images/blogs/@item.Image"></div>
+                            <div class="blog__item__pic set-bg" data-setbg="@item.Image"></div>
                             <div class="blog__item__text">
-                                <span><img src="assets/img/icon/calendar.png" alt="">@item.CreateDate </span>
+                                <span><img src="assets/img/icon/calendar.png" alt="">@item.CreateDate</span>
                                 <h5>@item.Title</h5>
-                                <a href="@Url">Đọc Thêm</a>
+                                <a asp-controller="Blog" asp-action="Details" asp-route-id="@item.BlogId">Đọc Thêm</a>
                             </div>
                         </div>
                     </div>
@@ -38,10 +38,31 @@
             }
         </div>
     </div>
-    <div aria-label="Page navigation example" class="mt-4">
-        <ul class="pagination">
-            <pager class="pager-container" list="@Model" asp-area="" asp-controller="Blog" asp-action="Index" />
-        </ul>
+
+    <div class="row">
+        <div class="col-lg-12">
+             <div class="product_pagination">
+                @{
+                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                }
+
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-default @prevDisabled">
+                    Trước 
+                </a>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-default @nextDisabled">
+                    Sau
+                </a>
+             </div>
+        </div>
     </div>
 </section>
 <!-- Blog Section End -->
