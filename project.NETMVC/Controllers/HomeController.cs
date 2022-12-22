@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using project.NETMVC.Models;
 using System;
@@ -20,6 +21,7 @@ namespace project.NETMVC.Controllers
 
         public IActionResult Index()
         {
+                   
             return View();
         }
         public IActionResult About()
