@@ -50,7 +50,7 @@ namespace project.NETMVC.Controllers
             switch (sortOrder)
             {
                 case "pricedown_desc":
-                    Products = Products.OrderByDescending(s => s.Price);
+                    Products = (IQueryable<Product>)Products.OrderByDescending(s => s.Price).ToList();
                     break;
                 case "Date":
                     Products = Products.OrderBy(s => s.Price);
