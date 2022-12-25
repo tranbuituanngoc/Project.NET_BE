@@ -1,7 +1,8 @@
-﻿@model IEnumerable<project.NETMVC.Models.Account>
-
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<project.NETMVC.Models.Account>
 @{
-    ViewData["Title"] = "Danh sách tài khoảng quản trị";
+    int currentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Danh sách tài khoảng quản trị - trang " + currentPage;
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="page-inner">
@@ -26,27 +27,22 @@
                 <div class="card-header">
                     <h4 class="card-title">Danh sách tài khoản</h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body ">
                     <div class="table-responsive">
                         <div id="multi-filter-select_wrapper" class=" container-fluid dt-bootstrap4">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="dataTables_length" id="multi-filter-select_length">
                                         <label>
-                                            <select class=" form-control form-control-sm" id="idrole" asp-items="ViewBag.QuyenTruyCap">
-                                                <option value="0" disabled selected>Chọn quyền truy cập</option>
-
+                                            <select class=" form-control form-control-sm" style="min-width: 160px; padding: .55rem .5rem !important;" id="txtRoleID" name="txtRoleID" asp-items="ViewBag.QuyenTruyCap">
+                                                <option disabled selected>Chọn quyền truy cập</option>
+                                                <option value="0">Chọn Tất Cả</option>
                                             </select>
-                                        </label>
-                                        <label class="ml-3">
-                                            <select class=" form-control form-control-sm" id="idstatus" asp-items="ViewBag.lsTrangThai">
-                                                <option value="" disabled selected>Chọn trạng thái</option>
-
-                                            </select>
-                                        </label>
+                                        </label> 
                                     </div>
                                     @*</div><div class="col-sm-12 col-md-6"><div id="multi-filter-select_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="multi-filter-select"></label></div></div>*@
-                                </div><div class="row">
+                                </div>
+                                <div class="row">
                                     <div class="col-sm-12">
                                         <table id="multi-filter-select" class="display table table-striped table-hover dataTable" role="grid" aria-describedby="multi-filter-select_info">
                                             <thead>
@@ -58,7 +54,7 @@
                                                     <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 146.5px; background: #dbdbdb; ">Quyền truy cập</th>
                                                     <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 87.512px; background: #dbdbdb; ">Trạng thái</th>
                                                     <th tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 120.512px; background: #dbdbdb; ">Lần đăng nhập cuối</th>
-                                                    <th style="width: 361px; background: #dbdbdb; "></th>
+                                                    <th style="width: 395px; background: #dbdbdb; "></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -91,9 +87,13 @@
                                                         </tr>
                                                     }
                                                 }
-
                                             </tbody>
                                         </table>
+                                        <div aria-label="Page navigation example" class="mt-4">
+                                            <ul class="pagination">
+                                                <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminAccounts" asp-route-RoleID="@ViewBag.CurrentRoleID" asp-action="Index" />
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -104,4 +104,42 @@
         </div>
     </div>
 </div>
-
+@* scripts to filter and search accounts *@
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            //script filter
+            //when id change then
+            jQuery("#txtRoleID").change(function () {
+                //set id= selected
+                var roleID = jQuery(this).children(":selected").attr("value");
+                roleID = parseFloat(roleID);
+                //get option and change when changed
+                $('#txtRoleID option')
+                    .removeAttr('selected');
+                $("#txtRoleID > [value=" + roleID + "]").attr("selected", "true");
+                //call ajax function
+                $.ajax({
+                    url: '/Admin/AdminAccounts/Filtter',
+                    //set data type to json
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        RoleID: roleID
+                    },
+                    async: true,
+                    //if success then send redirect to url and call filter function in AdminAccountsController
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    //else error
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -139,7 +139,7 @@ namespace WebShop.Helpper
             return url;
         }
 
-        // upload image have conditional
+        // upload image
         public static async Task<string> UploadFile(Microsoft.AspNetCore.Http.IFormFile file, string sDirectory, string newname = null)
         {
             try
@@ -149,6 +149,35 @@ namespace WebShop.Helpper
                 CreateIfMissing(path);
                 string pathFile = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", sDirectory, newname);
                 var supportedTypes = new[] { "jpg", "jpeg", "png", "gif" };
+                var fileExt = System.IO.Path.GetExtension(file.FileName).Substring(1);
+                if (!supportedTypes.Contains(fileExt.ToLower())) /// Khác các file định nghĩa
+                {
+                    return null;
+                }
+                else
+                {
+                    using (var stream = new FileStream(pathFile, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                    return newname;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        //upload video
+        public static async Task<string> UploadVideo(Microsoft.AspNetCore.Http.IFormFile file, string sDirectory, string newname = null)
+        {
+            try
+            {
+                if (newname == null) newname = file.FileName;
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", sDirectory);
+                CreateIfMissing(path);
+                string pathFile = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", sDirectory, newname);
+                var supportedTypes = new[] { "mp4", "avi", "mov", "wmv","flv" };
                 var fileExt = System.IO.Path.GetExtension(file.FileName).Substring(1);
                 if (!supportedTypes.Contains(fileExt.ToLower())) /// Khác các file định nghĩa
                 {

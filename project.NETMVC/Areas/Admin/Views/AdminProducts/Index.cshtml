@@ -2,7 +2,7 @@
 @model PagedList.Core.IPagedList<project.NETMVC.Models.Product>
 @{
     int currentPage = ViewBag.CurrentPage;
-    ViewData["Title"] = "Danh sách sản phẩm" + currentPage;
+    ViewData["Title"] = "Danh sách sản phẩm - trang " + currentPage;
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="page-inner">
@@ -43,7 +43,6 @@
                                                 <option value="0">Chọn Tất Cả</option>
                                             </select>
                                         </label>
-
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
