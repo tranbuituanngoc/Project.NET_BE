@@ -17,7 +17,48 @@ namespace project.NETMVC.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["PriceUpSortParm"] = String.IsNullOrEmpty(sortOrder) ? "priceup_desc" : "";
+            ViewData["PriceDownSortParm"] = sortOrder == "Price" ? "pricedown_desc" : "Price";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var Products = from s in _context.Products
+                        select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Products = Products.Where(s => s.Name.Contains(searchString)
+                                       || s.Name.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "pricedown_desc":
+                    Products = Products.OrderByDescending(s => s.Price);
+                    break;
+                case "Date":
+                    Products = Products.OrderBy(s => s.Price);
+                    break;
+                case "priceup_desc":
+                    Products = Products.OrderByDescending(s => s.Price);
+                    break;
+                default:
+                    Products = Products.OrderBy(s => s.Price);
+                    break;
+            }
+
+            int pageSize = 9;
+            return View(await PaginatedList<Product>.CreateAsync(Products.AsNoTracking(), pageNumber ?? 1, pageSize));
+
         }
         public IActionResult Details(int id)
         {
@@ -26,7 +67,9 @@ namespace project.NETMVC.Controllers
             {
                 return RedirectToAction("Index");
             }
+            
             return View(product);
+
         }
     }
 }
