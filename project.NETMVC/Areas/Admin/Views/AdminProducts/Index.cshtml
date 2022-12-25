@@ -71,34 +71,7 @@
                                         <th class="text-center" style="width: 252px; background: #dbdbdb; "></th>
                                         </thead>
                                         <tbody id="records_table" class="text-center">
-                                            @if (Model != null)
-                                            {
-                                                foreach (var item in Model)
-                                                {
-                                                    <tr role="row" style="background-color:none">
-                                                        <td class="sorting_1">@item.IdSp</td>
-                                                        <td>@item.Name</td>
-                                                        <td>@item.Cate.CatName</td>
-                                                        <td>@item.Price.Value.ToString("#,##") VNĐ</td>
-                                                        <td>@item.UnitslnStock</td>
-                                                        <td>
-                                                            @if (item.UnitslnStock.Value > 0)
-                                                            {
-                                                                <span>Còn hàng</span>
-                                                            }
-                                                            else
-                                                            {
-                                                                <span>Hết hàng</span>
-                                                            }
-                                                        </td>
-                                                        <td>
-                                                            <a class="btn-sm btn-info" asp-area="Admin" asp-controller="AdminProducts" asp-action="Details" asp-route-id="@item.IdSp">View</a>
-                                                            <a class="btn-sm btn-secondary" asp-area="Admin" asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@item.IdSp">Edit</a>
-                                                            <a class="btn-sm btn-danger" asp-area="Admin" asp-controller="AdminProducts" asp-action="Delete" asp-route-id="@item.IdSp">Delete</a>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            }
+                                           
                                         </tbody>
                                     </table>
                                     <div aria-label="Page navigation example" class="mt-4">

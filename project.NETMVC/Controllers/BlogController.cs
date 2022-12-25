@@ -12,7 +12,7 @@ namespace project.NETMVC.Controllers
     public class BlogController : Controller
     {
         private readonly unisexShopContext _context;
-       
+
 
         public BlogController(unisexShopContext context)
         {
@@ -20,23 +20,37 @@ namespace project.NETMVC.Controllers
         }
 
         // GET: Admin/AdminBlogs
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(
+            string currentFilter,
+            string searchString,
+            int? pageNumber)
         {
-            //Paging page
-            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            //set pageSize
-            var pageSize = 10;
-            //get customer desc
-            var lsBlogs = _context.Blogs.AsNoTracking().OrderByDescending(x => x.BlogId);
-            PagedList<Blog> models = new PagedList<Blog>(lsBlogs, pageNumber, pageSize);
-            ViewBag.CurrentPage = pageNumber;
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
 
-            return View(models);
+            ViewData["CurrentFilter"] = searchString;
+
+            var blogs = from s in _context.Blogs
+                        select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                blogs = blogs.Where(s => s.Title.Contains(searchString)
+                                       || s.Title.Contains(searchString));
+            }
+
+            int pageSize = 6;
+            return View(await PaginatedList<Blog>.CreateAsync(blogs.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         public IActionResult Details(int id)
         {
-            var blog = _context.Blogs.AsNoTracking().SingleOrDefault(x=>x.BlogId==id);
+            var blog = _context.Blogs.AsNoTracking().SingleOrDefault(x => x.BlogId == id);
             if (blog == null)
             {
                 return RedirectToAction("Index");
