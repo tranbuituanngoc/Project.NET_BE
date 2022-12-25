@@ -29,8 +29,8 @@
                 <div class="shop__sidebar">
                     <div class="shop__sidebar__search">
                         <form action="#">
-                            <input type="text" placeholder="Tìm kiếm...">
-                            <button type="submit"><span class="icon_search"></span></button>
+                            <input type="text" placeholder="Tìm kiếm..." name="SearchString" value="@ViewData["CurrentFilter"]">
+                            <button type="submit" value="Search"><span class="icon_search"></span></button>
                         </form>
                     </div>
                     <div class="shop__sidebar__accordion">
@@ -115,44 +115,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card">
-                                <div class="card-heading">
-                                    <a data-toggle="collapse" data-target="#collapseFive">Màu Sắc</a>
-                                </div>
-                                <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        <div class="shop__sidebar__color">
-                                            <label class="c-1" for="sp-1">
-                                                <input type="radio" id="sp-1">
-                                            </label>
-                                            <label class="c-2" for="sp-2">
-                                                <input type="radio" id="sp-2">
-                                            </label>
-                                            <label class="c-3" for="sp-3">
-                                                <input type="radio" id="sp-3">
-                                            </label>
-                                            <label class="c-4" for="sp-4">
-                                                <input type="radio" id="sp-4">
-                                            </label>
-                                            <label class="c-5" for="sp-5">
-                                                <input type="radio" id="sp-5">
-                                            </label>
-                                            <label class="c-6" for="sp-6">
-                                                <input type="radio" id="sp-6">
-                                            </label>
-                                            <label class="c-7" for="sp-7">
-                                                <input type="radio" id="sp-7">
-                                            </label>
-                                            <label class="c-8" for="sp-8">
-                                                <input type="radio" id="sp-8">
-                                            </label>
-                                            <label class="c-9" for="sp-9">
-                                                <input type="radio" id="sp-9">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -167,7 +130,6 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="shop__product__option__right">
-
                                 <div>
                                     <a asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]">Mặc định</a>
                                     <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceUpSortParm"]">Thấp đến cao</a>
@@ -179,6 +141,8 @@
                         </div>
                     </div>
                 </div>
+               
+                    
                 <div class="row">
                     @if (Model != null && Model.Count() > 0)
                     {
@@ -186,15 +150,11 @@
                         {
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item sale">
-                                    <div class="product__item__pic set-bg" data-setbg="/images/products/@item.Thumb">
-                                        @if (@item.Discount == 1)
-                                        {
-                                            <span class="label">Sale</span>
-                                        }
+                                    <div class="product__item__pic set-bg" data-setbg="@item.Image">
+                                       @if (@item.Discount == 1) {
+                                        <span class="label">Sale</span>
+                                       }
                                         <ul class="product__hover">
-                                            <li>
-                                                <a href="#"><img src="~/assets/img/icon/heart.png" alt=""></a>
-                                            </li>
                                             <li>
                                                 <a asp-controller="Product" asp-action="Details" asp-route-id="@item.IdSp"><img src="~/assets/img/icon/search.png" alt=""></a>
                                             </li>
@@ -211,50 +171,39 @@
                                             <i class="fa fa-star-o"></i>
                                         </div>
                                         <h5>@item.Price₫</h5>
-                                        <div class="product__color__select">
-                                            <label for="pc-4">
-                                                <input type="radio" id="pc-4">
-                                            </label>
-                                            <label class="active black" for="pc-5">
-                                                <input type="radio" id="pc-5">
-                                            </label>
-                                            <label class="grey" for="pc-6">
-                                                <input type="radio" id="pc-6">
-                                            </label>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         }
                     }
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="product_pagination">
-                                @{
-                                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-                                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-                                }
-
-                                <a asp-action="Index"
-                                   asp-route-sortOrder="@ViewData["CurrentSort"]"
-                                   asp-route-pageNumber="@(Model.PageIndex - 1)"
-                                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                                   class="btn btn-default @prevDisabled">
-                                    Trước
-                                </a>
-                                <a asp-action="Index"
-                                   asp-route-sortOrder="@ViewData["CurrentSort"]"
-                                   asp-route-pageNumber="@(Model.PageIndex + 1)"
-                                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                                   class="btn btn-default @nextDisabled">
-                                    Sau
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
+                    
+               
+                    <div class="col-lg-12">
+                        <div class="product_pagination">
+                            @{
+                                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                            }
+
+                            <a asp-action="Index"
+                               asp-route-sortOrder="@ViewData["CurrentSort"]"
+                               asp-route-pageNumber="@(Model.PageIndex - 1)"
+                               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                               class="btn btn-default @prevDisabled">
+                                Trước
+                            </a>
+                            <a asp-action="Index"
+                               asp-route-sortOrder="@ViewData["CurrentSort"]"
+                               asp-route-pageNumber="@(Model.PageIndex + 1)"
+                               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                               class="btn btn-default @nextDisabled">
+                                Sau
+                            </a>
+                        </div>
+                    </div>
+                
+            </div>
         </div>
     </div>
 </section>
