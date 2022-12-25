@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-7">
                     <div class="header__top__left">
-
+                        <span class="text-white">Miễn phí vận chuyển và đổi trả trong vòng 30 ngày nếu có lỗi</span>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-5">
@@ -15,14 +15,6 @@
                             <a href="#">ĐĂNG KÝ</a>
                             <a href="#">FAQs</a>
                         </div>
-                        <div class="header__top__hover">
-                            <span>TIỀN TỆ <i class="arrow_carrot-down"></i></span>
-                            <ul>
-                                <li>VNĐ</li>
-                                <li>EUR</li>
-                                <li>USD</li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -32,7 +24,7 @@
         <div class="row">
             <div class="col-lg-2 col-md-2">
                 <div class="header__logo">
-                    <a href="./index.html"><img src="~/assets/img/logo.png" alt=""></a>
+                    <a asp-controller="Home" asp-action="Index"><img src="~/assets/img/logo.png" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-7 col-md-7">
@@ -58,17 +50,6 @@
             </div>
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option">
-                    <a href="#" class="search-switch"><img src="~/assets/img/icon/search.png" alt="" onmouseover="hideWishList()"></a>
-                    <a href="#"><img src="~/assets/img/icon/heart.png" alt="" id="wishList" onmouseover="showWishList(); hideCart()"></a>
-                    <span id="numProdWL">0</span>
-                    <div id="triangleWL" onmouseleave="hideWishList()"></div>
-                    <div id="showWL" onmouseleave="hideWishList()">
-                        <table class="listProdWL">
-                            <p><span>Thêm sản phẩm vào danh sách yêu thích</span></p>
-                            <tbody id="myWL">
-                            </tbody>
-                        </table>
-                    </div>
                     <a href="#"><img src="~/assets/img/icon/cart.png" alt="" onmouseover="showCart(); hideWishList()"> </a>
                     <span id="numProd">0</span>
                     <div id="triangle" onmouseleave="hideCart()"></div>

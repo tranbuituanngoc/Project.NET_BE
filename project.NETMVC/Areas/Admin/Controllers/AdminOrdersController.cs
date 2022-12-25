@@ -21,18 +21,19 @@ namespace project.NETMVC.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminOrders
-        public async Task<IActionResult> Index(int? page)
+        public IActionResult Index(int? page)
         {
-            //Paging page
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            //set pageSize
-            var pageSize = 10;
-            //get customer desc
-            var lsOrders = _context.Orders.AsNoTracking().OrderByDescending(x => x.OrderId);
-            PagedList<Order> models = new PagedList<Order>(lsOrders, pageNumber, pageSize);
+            var pageSize = 20;
+            var Orders = _context.Orders.Include(o => o.Custommer).Include(o => o.TransactStatus)
+                .AsNoTracking()
+                .OrderBy(x => x.OrderDate);
+            PagedList<Order> models = new PagedList<Order>(Orders, pageNumber, pageSize);
+
             ViewBag.CurrentPage = pageNumber;
             return View(models);
         }
+
         // GET: Admin/AdminOrders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -49,7 +50,8 @@ namespace project.NETMVC.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            //var Chitietdonhang = _context.OrderDetails.Include(x => x.Product).AsNoTracking().Where(x => x.OrderId == order.OrderId).ToList();
+            //ViewBag.ChiTiet = Chitietdonhang;
             return View(order);
         }
 
