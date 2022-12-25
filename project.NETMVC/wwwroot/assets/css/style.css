@@ -3096,11 +3096,12 @@ ol {
     transition: all, 0.3s;
 }
 
-
+.product_pagination {
+    text-align: center;
+}
 /*---------------------
   Blog Sidebar
 -----------------------*/
-
 .blog__sidebar__item {
     text-align: center;
     margin-bottom: 65px;
