@@ -167,11 +167,14 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="shop__product__option__right">
-                                <p>Sắp xếp theo giá:</p>
-                                <select>
-                                    <option value="">Thấp đến cao</option>
-                                    <option value="">Cao đến thấp</option>
-                                </select>
+
+                                <div>
+                                    <a asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]">Mặc định</a>
+                                    <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceUpSortParm"]">Thấp đến cao</a>
+                                    <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceDownSortParm"]">Cao đến thấp</a>
+                                </div>
+                                   
+                                
                             </div>
                         </div>
                     </div>
