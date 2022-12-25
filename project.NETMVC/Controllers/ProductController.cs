@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PagedList.Core;
 using project.NETMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace project.NETMVC.Controllers
@@ -15,7 +17,12 @@ namespace project.NETMVC.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync
+            (string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber
+            )
         {
 
             ViewData["CurrentSort"] = sortOrder;
