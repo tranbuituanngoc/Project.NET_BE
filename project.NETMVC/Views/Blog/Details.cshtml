@@ -1,23 +1,23 @@
 ﻿@model project.NETMVC.Models.Blog
 
+
 @{
-    ViewData["Title"] = Model.Title;
+    ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 <!-- Blog Details Hero Begin -->
 <section class="blog-hero spad">
     <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col-lg-9 text-center">
-                    <h2>@Model.Title</h2>
-                   
-                        <span>15/05/2022</span>
-                    
-                </div>
+                <h2>@Model.Title</h2>
+
+                <span>15/05/2022</span>
+
             </div>
         </div>
+    </div>
     </div>
 </section>
 <!-- Blog Details Hero End -->
@@ -88,3 +88,6 @@
     </div>
 </section>
 <!-- Blog Details Section End -->
+</div>
+<div>
+</div>
