@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using PagedList.Core;
 using project.NETMVC.Models;
 
 namespace project.NETMVC.Areas.Admin.Controllers
@@ -20,22 +21,57 @@ namespace project.NETMVC.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminAccounts
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int page = 1, int RoleID = 0)
         {
-            //Create view data to filter description in index page
-            ViewData["QuyenTruyCap"] = new SelectList(_context.Roles, "RoleId", "Description");
+            var pageNumber = page;
+            var pageSize = 10;
 
-            //create selectlist to filter status in index page
+            //get list product after filter
+            List<Account> lsAccounts = new List<Account>();
+
             List<SelectListItem> lsTrangThai = new List<SelectListItem>();
             lsTrangThai.Add(new SelectListItem() { Text = "Hoạt động", Value = "1" });
             lsTrangThai.Add(new SelectListItem() { Text = "Khóa", Value = "0" });
+          
+
+            //if filted then where cateID=catID else seleted all
+            if (RoleID != 0)
+            {
+                lsAccounts = _context.Accounts
+                .AsNoTracking()
+                .Where(x => x.RoleId == RoleID)
+                .Include(x => x.Role)
+                .OrderByDescending(x => x.AccountId).ToList();
+            }
+            else
+            {
+                lsAccounts = _context.Accounts
+               .AsNoTracking()
+               .Include(x => x.Role)
+               .OrderByDescending(x => x.AccountId).ToList();
+            }
+
+            // because to list so parse to queryable like lsProducts.AsQueryable()
+            PagedList<Account> models = new PagedList<Account>(lsAccounts.AsQueryable(), pageNumber, pageSize);
+            ViewBag.CurrentRoleID = RoleID;
+
+            ViewBag.CurrentPage = pageNumber;
+          
+            ViewData["QuyenTruyCap"] = new SelectList(_context.Roles, "RoleId", "Description",RoleID);
             ViewData["lsTrangThai"] = lsTrangThai;
-
-
-
-            var unisexShopContext = _context.Accounts.Include(a => a.Role);
-    
-            return View(await unisexShopContext.ToListAsync());
+            return View(models);
+        }
+        //GET: Admin/AdminAccounts/Filtter
+        public IActionResult Filtter(int RoleID = 0)
+        {
+            var url = $"/Admin/AdminAccounts?RoleID={RoleID}";
+            // get all product else return RoleID
+            if (RoleID == 0)
+            {
+                url = $"/Admin/AdminAccounts";
+            }
+            //return a json file and send redirect to AdminAccounts
+            return Json(new { status = "success", redirectUrl = url });
         }
 
         // GET: Admin/AdminAccounts/Details/5

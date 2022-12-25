@@ -1183,6 +1183,10 @@ ol {
     color: #111111;
 }
 
+.product_pagination {
+    text-align: center;
+}
+
 .product__item {
     overflow: hidden;
     margin-bottom: 40px;
@@ -3096,12 +3100,11 @@ ol {
     transition: all, 0.3s;
 }
 
-.product_pagination {
-    text-align: center;
-}
+
 /*---------------------
   Blog Sidebar
 -----------------------*/
+
 .blog__sidebar__item {
     text-align: center;
     margin-bottom: 65px;

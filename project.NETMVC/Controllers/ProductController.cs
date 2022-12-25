@@ -51,7 +51,7 @@ namespace project.NETMVC.Controllers
             switch (sortOrder)
             {
                 case "pricedown_desc":
-                    Products = Products.OrderByDescending(s => s.Name);
+                    Products = Products.OrderByDescending(s => s.Price);
                     break;
                 case "Date":
                     Products = Products.OrderBy(s => s.Price);
@@ -60,7 +60,7 @@ namespace project.NETMVC.Controllers
                     Products = Products.OrderByDescending(s => s.Price);
                     break;
                 default:
-                    Products = Products.OrderBy(s => s.Name);
+                    Products = Products.OrderBy(s => s.Price);
                     break;
             }
 
@@ -75,7 +75,7 @@ namespace project.NETMVC.Controllers
             {
                 return RedirectToAction("Index");
             }
-            return View(Details);
+            return View(Product);
         }
     }
 }

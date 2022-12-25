@@ -55,7 +55,7 @@ namespace project.NETMVC.Controllers
             {
                 return RedirectToAction("Index");
             }
-            return View("Details");
+            return View(blog);
         }
     }
 }

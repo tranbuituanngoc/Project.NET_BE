@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -15,7 +16,7 @@
                             <h6>Bộ sưu tập mùa hè</h6>
                             <h2>Bộ sưu tập thu đông 2030</h2>
                             <p>Thiết kế trẻ trung sang trọng, xu hướng thời trang đẹp mắt và luôn phù hợp với giới trẻ. Được cam kết về chất lượng của sản phẩm và thương hiệu.</p>
-                            <a href="#" class="primary-btn">Mua ngay <span class="arrow_right"></span></a>
+                            <a asp-controller="Product" asp-action="Index" class="primary-btn">Mua ngay <span class="arrow_right"></span></a>
                             <div class="hero__social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#"><i class="fa fa-twitter"></i></a>
@@ -61,7 +62,7 @@
                     </div>
                     <div class="banner__item__text">
                         <h2>Áo polo</h2>
-                        <a href="#">mua ngay</a>
+                        <a asp-controller="Product" asp-action="Index">mua ngay</a>
                     </div>
                 </div>
             </div>
@@ -72,7 +73,7 @@
                     </div>
                     <div class="banner__item__text">
                         <h2>Áo thun</h2>
-                        <a href="#">mua ngay</a>
+                        <a asp-controller="Product" asp-action="Index">mua ngay</a>
                     </div>
                 </div>
             </div>
@@ -83,7 +84,7 @@
                     </div>
                     <div class="banner__item__text">
                         <h2> Áo khoác</h2>
-                        <a href="#">Mua ngay</a>
+                        <a asp-controller="Product" asp-action="Index">Mua ngay</a>
                     </div>
                 </div>
             </div>
