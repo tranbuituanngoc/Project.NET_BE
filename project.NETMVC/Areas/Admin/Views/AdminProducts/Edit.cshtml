@@ -99,6 +99,15 @@
                                 <input name="fThumb" type="file" class="form-control-file" asp-for="Thumb" />
                                 <span asp-validation-for="Thumb" class="text-danger"></span>
                             </div>
+                            <div class="form-group">
+                                <label class="font-weight-semibold" for="productBrand">Video sản phẩm</label>
+                                <input name="fVideo" type="file" class="form-control-file" asp-for="Thumb" />
+                                <span asp-validation-for="Video" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-weight-semibold" for="image">Ảnh chi tiết</label>
+                                <textarea asp-for="Image" style="width: 100%; min-height: 300px; padding: 10px;" placeholder="Vui lòng nhập link ảnh và ngăn cách nhau bởi dấu ','"></textarea>
+                            </div>
                             <div class="row">
                                 <div class="m-t-25">
                                     <div class="form-group d-flex align-items-center">

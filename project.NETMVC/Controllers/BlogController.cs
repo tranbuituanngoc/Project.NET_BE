@@ -19,7 +19,7 @@ namespace project.NETMVC.Controllers
             _context = context;
         }
 
-        // GET: Admin/AdminBlogs
+        // GET: Blogs
         public async Task<IActionResult> Index(
             string currentFilter,
             string searchString,
@@ -44,6 +44,8 @@ namespace project.NETMVC.Controllers
                                        || s.Title.Contains(searchString));
             }
 
+            
+
             int pageSize = 6;
             return View(await PaginatedList<Blog>.CreateAsync(blogs.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
@@ -55,6 +57,12 @@ namespace project.NETMVC.Controllers
             {
                 return RedirectToAction("Index");
             }
+            var lsBaivietlienquan = _context.Blogs
+                .AsNoTracking()
+                .Where(x => x.Published == true && x.BlogId != id)
+                .Take(3)
+                .OrderByDescending(x => x.CreateDate).ToList();
+            ViewBag.Baivietlienquan = lsBaivietlienquan;
             return View(blog);
         }
     }

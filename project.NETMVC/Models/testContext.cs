@@ -221,8 +221,6 @@ namespace project.NETMVC.Models
 
                 entity.Property(e => e.OrderDate).HasColumnType("datetime");
 
-                entity.Property(e => e.OrderDetailsId).HasColumnName("orderDetailsID");
-
                 entity.Property(e => e.PaymentDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ShipDate).HasColumnType("datetime");
@@ -234,11 +232,6 @@ namespace project.NETMVC.Models
                     .HasForeignKey(d => d.CustommerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_order_custommer");
-
-                entity.HasOne(d => d.OrderDetails)
-                    .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.OrderDetailsId)
-                    .HasConstraintName("FK_order_orderDetails");
 
                 entity.HasOne(d => d.TransactStatus)
                     .WithMany(p => p.Orders)

@@ -162,7 +162,7 @@ namespace project.NETMVC.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdSp,Name,CateId,Price,Status,Discount,DateCreate,DateModified,BestSeller,HomeFlag,Active,UnitslnStock,Thumb,Image,Video,ShortDescrip,Descrip")] Product product, Microsoft.AspNetCore.Http.IFormFile fThumb)
+        public async Task<IActionResult> Edit(int id, [Bind("IdSp,Name,CateId,Price,Status,Discount,DateCreate,DateModified,BestSeller,HomeFlag,Active,UnitslnStock,Thumb,Image,Video,ShortDescrip,Descrip")] Product product, Microsoft.AspNetCore.Http.IFormFile fThumb, Microsoft.AspNetCore.Http.IFormFile fVideo)
         {
             if (id != product.IdSp)
             {
@@ -183,7 +183,14 @@ namespace project.NETMVC.Areas.Admin.Controllers
                             string image = Utilities.SEOUrl(product.Name) + extension;
                             product.Thumb = await  Utilities.UploadFile(fThumb, @"products", image.ToLower());
                         }
+                        if (fVideo != null)
+                        {
+                            string extension = Path.GetExtension(fVideo.FileName);
+                            string video = Utilities.SEOUrl(product.Name) + extension;
+                            product.Video = await Utilities.UploadVideo(fVideo, @"products", video.ToLower());
+                        }
                         if (string.IsNullOrEmpty(product.Thumb)) product.Thumb = "default.jpg";
+                        if (string.IsNullOrEmpty(product.Video)) product.Video = "default.mp4";
                         product.DateModified = DateTime.Now;
 
                         _context.Update(product);

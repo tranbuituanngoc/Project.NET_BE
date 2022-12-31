@@ -31,48 +31,46 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <div id="basic-datatables_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-                                <div class="col-sm-12">
-                                    <table id="basic-datatables" class="display table table-striped table-hover dataTable" role="grid" aria-describedby="basic-datatables_info">
-                                        <thead>
-                                        <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 20px; background: #dbdbdb; ">ID</th>
-                                        <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 250px; background: #dbdbdb; ">Thông tin khách hàng</th>
-                                        <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 186.5px; background: #dbdbdb; ">Địa chỉ</th>
-                                        <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 146.5px; background: #dbdbdb; ">Tỉnh/Thành phố</th>
-                                        <th style="width: 215px; background: #dbdbdb; "></th>
-                                        </thead>
-                                        <tbody class="text-center">
-                                            @if (Model != null)
+                            <div class="col-sm-12">
+                                <table id="basic-datatables" class="display table table-striped table-hover dataTable" role="grid" aria-describedby="basic-datatables_info">
+                                    <thead>
+                                    <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 20px; background: #dbdbdb; ">ID</th>
+                                    <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 250px; background: #dbdbdb; ">Thông tin khách hàng</th>
+                                    <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 186.5px; background: #dbdbdb; ">Địa chỉ</th>
+                                    <th class="text-center" tabindex="0" aria-controls="multi-filter-select" rowspan="1" colspan="1" style="width: 146.5px; background: #dbdbdb; ">Tỉnh/Thành phố</th>
+                                    <th style="width: 215px; background: #dbdbdb; "></th>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        @if (Model != null)
+                                        {
+                                            foreach (var item in Model)
                                             {
-                                                foreach (var item in Model)
-                                                {
-                                                    <tr role="row" class="odd">
-                                                        <td class="sorting_1">@item.CustommerId</td>
-                                                        <td>
-                                                            <p>@item.FullName</p>
-                                                            <p>@item.Email</p>
-                                                            <p>@item.Phone</p>
-                                                        </td>
-                                                        <td>@item.Address</td>
-                                                        <td>@item.Location.Conscious</td>
-                                                        <td>
-                                                            <a class="btn-sm btn-info" asp-area="Admin" asp-controller="AdminCustommers" asp-action="Details" asp-route-id="@item.CustommerId">View</a>
-                                                            <a class="btn-sm btn-secondary" asp-area="Admin" asp-controller="AdminCustommers" asp-action="Edit" asp-route-id="@item.CustommerId">Edit</a>
-                                                            <a class="btn-sm btn-danger" asp-area="Admin" asp-controller="AdminCustommers" asp-action="Delete" asp-route-id="@item.CustommerId">Delete</a>
-                                                        </td>
-                                                    </tr>
-                                                }
+                                                <tr role="row" class="odd">
+                                                    <td class="sorting_1">@item.CustommerId</td>
+                                                    <td>
+                                                        <p>@item.FullName</p>
+                                                        <p>@item.Email</p>
+                                                        <p>@item.Phone</p>
+                                                    </td>
+                                                    <td>@item.Address</td>
+                                                    <td>@item.Location.Conscious</td>
+                                                    <td>
+                                                        <a class="btn-sm btn-info" asp-area="Admin" asp-controller="AdminCustommers" asp-action="Details" asp-route-id="@item.CustommerId">View</a>
+                                                        <a class="btn-sm btn-secondary" asp-area="Admin" asp-controller="AdminCustommers" asp-action="Edit" asp-route-id="@item.CustommerId">Edit</a>
+                                                        <a class="btn-sm btn-danger" asp-area="Admin" asp-controller="AdminCustommers" asp-action="Delete" asp-route-id="@item.CustommerId">Delete</a>
+                                                    </td>
+                                                </tr>
                                             }
+                                        }
 
-                                        </tbody>
-                                    </table>
-                                    <div aria-label="Page navigation example" class="mt-4">
-                                        <ul class="pagination">
-                                            <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminCustommers" asp-action="Index" />
-                                        </ul>
-                                    </div>
+                                    </tbody>
+                                </table>
+                                <div aria-label="Page navigation example" class="mt-4">
+                                    <ul class="pagination">
+                                        <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminCustommers" asp-action="Index" />
+                                    </ul>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -80,3 +78,4 @@
         </div>
     </div>
 </div>
+  

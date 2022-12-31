@@ -80,6 +80,13 @@ namespace project.NETMVC.Controllers
             {
                 return RedirectToAction("Index");
             }
+            var lsProduct = _context.Products
+                      .AsNoTracking()
+                      .Where(x => x.CateId == Product.CateId && x.IdSp != id && x.Active == true)
+                      .Take(3)
+                      .OrderByDescending(x => x.DateCreate)
+                      .ToList();
+            ViewBag.SanPham = lsProduct;
             return View(Product);
         }
     }

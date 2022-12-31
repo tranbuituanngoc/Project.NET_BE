@@ -634,7 +634,7 @@ ol {
         border-radius: 5px;
         /* padding: 10px; */
         float: left;
-        z-index: 1;
+        z-index: 9;
     }
 
         .header__nav__option #showCart table.listProd {

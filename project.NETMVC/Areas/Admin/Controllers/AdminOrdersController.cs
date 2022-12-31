@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,25 +15,28 @@ namespace project.NETMVC.Areas.Admin.Controllers
     public class AdminOrdersController : Controller
     {
         private readonly unisexShopContext _context;
+        public INotyfService _notyfService { get; }
 
-        public AdminOrdersController(unisexShopContext context)
+        public AdminOrdersController(unisexShopContext context, INotyfService notyfService)
         {
             _context = context;
+            _notyfService = notyfService;
         }
 
         // GET: Admin/AdminOrders
-        public async Task<IActionResult> Index(int? page)
+        public IActionResult Index(int? page)
         {
-            //Paging page
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            //set pageSize
-            var pageSize = 10;
-            //get customer desc
-            var lsOrders = _context.Orders.AsNoTracking().OrderByDescending(x => x.OrderId);
-            PagedList<Order> models = new PagedList<Order>(lsOrders, pageNumber, pageSize);
+            var pageSize = 20;
+            var Orders = _context.Orders.Include(o => o.Custommer).Include(o => o.TransactStatus)
+                .AsNoTracking()
+                .OrderBy(x => x.OrderDate);
+            PagedList<Order> models = new PagedList<Order>(Orders, pageNumber, pageSize);
+
             ViewBag.CurrentPage = pageNumber;
             return View(models);
         }
+
         // GET: Admin/AdminOrders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -49,7 +53,8 @@ namespace project.NETMVC.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            //var Chitietdonhang = _context.OrderDetails.Include(x => x.Product).AsNoTracking().Where(x => x.OrderId == order.OrderId).ToList();
+            //ViewBag.ChiTiet = Chitietdonhang;
             return View(order);
         }
 
@@ -114,6 +119,7 @@ namespace project.NETMVC.Areas.Admin.Controllers
                 try
                 {
                     _context.Update(order);
+                    _notyfService.Success("Cập nhật thành công");
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -162,6 +168,7 @@ namespace project.NETMVC.Areas.Admin.Controllers
             var order = await _context.Orders.FindAsync(id);
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
+            _notyfService.Success("Xóa thành công");
             return RedirectToAction(nameof(Index));
         }
 
