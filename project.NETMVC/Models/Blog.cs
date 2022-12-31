@@ -19,5 +19,6 @@ namespace project.NETMVC.Models
         public bool Published { get; set; }
         public string ListImage { get; set; }
         public string Contents { get; set; }
+
     }
 }

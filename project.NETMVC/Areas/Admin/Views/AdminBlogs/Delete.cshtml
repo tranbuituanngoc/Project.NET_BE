@@ -83,7 +83,7 @@
                     <tr>
                         <td>Xác nhận xóa:</td>
                         <td>
-                            <form asp-controller="AdminProducts" asp-route-id="@Model.BlogId" asp-action="Delete">
+                            <form asp-controller="AdminBlogs" asp-route-id="@Model.BlogId" asp-action="Delete">
                                 <input type="hidden" asp-for="BlogId" />
                                 <input type="submit" value="Xác nhận xóa" class="btn btn-danger" />
                             </form>

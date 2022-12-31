@@ -218,7 +218,7 @@
                                 <div class="blog__item__text">
                                     <span><img src="/assets/img/icon/calendar.png" alt="">@item.CreateDate</span>
                                     <h5>@item.Title</h5>
-                                    <a href="#">Đọc thêm</a>
+                                    <a  asp-controller="Blog" asp-action="Details" asp-route-id="@item.BlogId">Đọc thêm</a>
                                 </div>
                             </div>
                         </div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,12 @@ namespace project.NETMVC.Areas.Admin.Controllers
     public class AdminOrdersController : Controller
     {
         private readonly unisexShopContext _context;
+        public INotyfService _notyfService { get; }
 
-        public AdminOrdersController(unisexShopContext context)
+        public AdminOrdersController(unisexShopContext context, INotyfService notyfService)
         {
             _context = context;
+            _notyfService = notyfService;
         }
 
         // GET: Admin/AdminOrders
@@ -116,6 +119,7 @@ namespace project.NETMVC.Areas.Admin.Controllers
                 try
                 {
                     _context.Update(order);
+                    _notyfService.Success("Cập nhật thành công");
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -164,6 +168,7 @@ namespace project.NETMVC.Areas.Admin.Controllers
             var order = await _context.Orders.FindAsync(id);
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
+            _notyfService.Success("Xóa thành công");
             return RedirectToAction(nameof(Index));
         }
 
